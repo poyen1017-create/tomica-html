@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMICA 多美小汽車官方網站（復刻版）</title>
+    <style>
+        /* ==========================================
+           1. 全域設定與變數 (CSS Variables)
+           ========================================== */
+        :root {
+            --primary-red: #e60012;     /* Tomica 經典紅色 */
+            --primary-yellow: #ffcc00;  /* 點綴黃色 */
+            --dark-gray: #333333;       /* 文字深灰色 */
+            --light-bg: #f7f7f7;        /* 背景淺灰色 */
+            --white: #ffffff;           /* 純白 */
+            --border-color: #e0e0e0;    /* 邊框灰色 */
+            --section-spacing: 50px;    /* 區塊間距 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            color: var(--dark-gray);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* 容器限制最大寬度與置中 */
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================
+           2. 頂部導覽列 (Header)
+           ========================================== */
+        header {
+            background-color: var(--white);
+            border-bottom: 4px solid var(--primary-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-red);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-red);
+        }
+
+        /* ==========================================
+           3. 主視覺橫幅 (Hero Banner)
+           ========================================== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #b3000d 100%);
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-yellow);
+            color: var(--dark-gray);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #ffd633;
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================
+           4. 最新商品區塊 (Products Section)
+           ========================================== */
+        .products-section {
+            padding-top: var(--section-spacing);
+            padding-bottom: var(--section-spacing);
+            background-color: var(--light-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
+            color: var(--dark-gray);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-red);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 商品網格佈局 (Grid) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .product-thumb {
+            height: 180px;
+            background-color: #e8e8e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* 模擬小汽車圖片的視覺（紅色車身示意） */
+        .car-mockup {
+            width: 70%;
+            height: 50px;
+            background: var(--primary-red);
+            border-radius: 15px 25px 5px 5px;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .car-mockup::before, .car-mockup::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            width: 25px;
+            height: 25px;
+            background: #222;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+        }
+        .car-mockup::before { left: 20px; }
+        .car-mockup::after { right: 20px; }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-id {
+            font-size: 0.85rem;
+            color: var(--primary-red);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* ==========================================
+           5. 頁尾 (Footer)
+           ========================================== */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">TOMICA</a>
+            <ul class="nav-links">
+                <li><a href="#">首頁</a></li>
+                <li><a href="#">商品情報</a></li>
+                <li><a href="#">活動訊息</a></li>
+                <li><a href="#">關於我們</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 主視覺 Banner -->
+    <section class="hero">
+        <div class="container">
+            <h1>TOMICA WORLD</h1>
+            <p>創造屬於你的小汽車冒險世界，最新車款熱血登場！</p>
+            <a href="#" class="btn">查看全部商品</a>
+        </div>
+    </section>
+
+    <!-- 最新商品區塊 -->
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">最新上市商品</h2>
+            
+            <div class="product-grid">
+                <!-- 商品卡片 1 -->
+                <div class="product-card">
+                    <div class="product-thumb">
+                        <div class="car-mockup"></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-id">No. 1</div>
+                        <h3 class="product-name">TOMICA 經典跑車</h3>
+                        <div class="product-price">建議售價：550 日圓（未稅）</div>
+                    </div>
+                </div>
+
+                <!-- 商品卡片 2 -->
+                <div class="product-card">
+                    <div class="product-thumb">
+                        <div class="car-mockup" style="background: #0055ff;"></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-id">No. 2</div>
+                        <h3 class="product-name">TOMICA 警察巡邏車</h3>
+                        <div class="product-price">建議售價：550 日圓（未稅）</div>
+                    </div>
+                </div>
+
+                <!-- 商品卡片 3 -->
+                <div class="product-card">
+                    <div class="product-thumb">
+                        <div class="car-mockup" style="background: #00aa44;"></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-id">No. 3</div>
+                        <h3 class="product-name">TOMICA 消防工程車</h3>
+                        <div class="product-price">建議售價：550 日圓（未稅）</div>
+                    </div>
+                </div>
+
+                <!-- 商品卡片 4 -->
+                <div class="product-card">
+                    <div class="product-thumb">
+                        <div class="car-mockup" style="background: #ff8800;"></div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-id">No. 4</div>
+                        <h3 class="product-name">TOMICA 賽車競速版</h3>
+                        <div class="product-price">建議售價：550 日圓（未稅）</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer>
+        <div class="container">
+            <p>&copy; TOMY / TOMICA. 此為模擬官方網站風格之純 HTML/CSS 練習範例。</p>
+        </div>
+    </footer>
+
+</body>
+</html>
